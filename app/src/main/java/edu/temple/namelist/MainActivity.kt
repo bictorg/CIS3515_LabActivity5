@@ -38,18 +38,24 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            names.removeAt(spinner.selectedItemPosition)
-            // Use CustomAdapter's updateData method to refresh the spinner
-            (spinner.adapter as CustomAdapter).updateData(names)
-            
-            // Update the displayed name
             if (names.isNotEmpty()) {
-                // If there are still names in the list, display the first one
-                nameTextView.text = names[0]
-                spinner.setSelection(0)
+                names.removeAt(spinner.selectedItemPosition)
+                // Use CustomAdapter's updateData method to refresh the spinner
+                (spinner.adapter as CustomAdapter).updateData(names)
+                
+                if (names.isNotEmpty()) {
+                    // If there are still names in the list, display the first one
+                    nameTextView.text = names[0]
+                    spinner.setSelection(0)
+                } else {
+                    // If the list is empty, clear the displayed name
+                    nameTextView.text = ""
+                }
             } else {
-                // If the list is empty, clear the displayed name
-                nameTextView.text = ""
+                // If the list is already empty, show a message or disable the button
+                nameTextView.text = "No more names to remove"
+                // Optionally, disable the delete button
+                findViewById<View>(R.id.deleteButton).isEnabled = false
             }
         }
 
