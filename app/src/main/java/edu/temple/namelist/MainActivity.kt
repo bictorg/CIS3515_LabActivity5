@@ -41,6 +41,16 @@ class MainActivity : AppCompatActivity() {
             names.removeAt(spinner.selectedItemPosition)
             // Use CustomAdapter's updateData method to refresh the spinner
             (spinner.adapter as CustomAdapter).updateData(names)
+            
+            // Update the displayed name
+            if (names.isNotEmpty()) {
+                // If there are still names in the list, display the first one
+                nameTextView.text = names[0]
+                spinner.setSelection(0)
+            } else {
+                // If the list is empty, clear the displayed name
+                nameTextView.text = ""
+            }
         }
 
     }
