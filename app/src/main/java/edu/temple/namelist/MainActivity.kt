@@ -12,7 +12,8 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var names: List<String>
+    // Change to MutableList<String> to allow modifying the list when deleting items
+    lateinit var names: MutableList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -37,8 +38,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<View>(R.id.deleteButton).setOnClickListener {
-            (names as MutableList).removeAt(spinner.selectedItemPosition)
-            (spinner.adapter as BaseAdapter).notifyDataSetChanged()
+            names.removeAt(spinner.selectedItemPosition)
+            // Use CustomAdapter's updateData method to refresh the spinner
+            (spinner.adapter as CustomAdapter).updateData(names)
         }
 
     }
